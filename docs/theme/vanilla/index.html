@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vanilla Theme Demo</title>
+
+    <!-- Pre-paint: set data-theme and theme-color BEFORE CSS to avoid flash -->
+    <meta name="theme-color" content="#ffffff" />
+    <script>
+      (function () {
+        try {
+          var d = document.documentElement;
+          var ls = null;
+          try {
+            ls = localStorage.getItem("theme");
+          } catch (_) {}
+          var pref = ls === "light" || ls === "dark" ? ls : null;
+          var m = document.cookie.match(/(?:^|; )theme=([^;]+)/);
+          var cs = m ? decodeURIComponent(m[1]) : null;
+          cs = cs === "light" || cs === "dark" || cs === "system" ? cs : null;
+          var sys = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          var t = pref || cs || "system";
+          var eff = t === "system" ? sys : t;
+          d.setAttribute("data-theme", eff);
+          d.style.colorScheme = eff;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", eff === "dark" ? "#0b1220" : "#ffffff");
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="card" style="max-width: 720px; margin: 2rem auto">
+      <h1>Vanilla Theme Controller</h1>
+      <p>
+        This page demonstrates a framework-agnostic dark/light theme system using
+        <code>html[data-theme]</code> and CSS variables. It persists user choice and respects OS preference when set to
+        <em>System</em>.
+      </p>
+
+      <div style="display: flex; gap: 0.5rem; align-items: center; margin: 1rem 0">
+        <button id="toggle" class="button ghost" aria-pressed="false" aria-label="Toggle theme">Toggle</button>
+
+        <button id="light" class="button secondary" aria-pressed="false">Light</button>
+        <button id="dark" class="button primary" aria-pressed="false">Dark</button>
+        <button id="system" class="button ghost" aria-pressed="false">System</button>
+      </div>
+
+      <section class="card" style="margin-top: 1rem">
+        <h2>Content</h2>
+        <p>
+          Background, text, borders, and focus styles derive from theme variables. Try switching themes and reload to
+          verify persistence.
+        </p>
+
+        <label>
+          <span>Example input</span><br />
+          <input class="input" placeholder="Focus me to see ring" />
+        </label>
+
+        <pre class="code-block" style="margin-top: 1rem"><code>// Current theme
+document.documentElement.getAttribute('data-theme')</code></pre>
+      </section>
+    </main>
+
+    <script src="./theme.js"></script>
+    <script>
+      // Initialize and wire controls
+      window.ThemeController.initTheme();
+
+      function updatePressed(effective, selected) {
+        const byId = (id) => document.getElementById(id);
+        const map = {
+          light: byId("light"),
+          dark: byId("dark"),
+          system: byId("system"),
+          toggle: byId("toggle"),
+        };
+        Object.values(map).forEach((b) => b && b.setAttribute("aria-pressed", "false"));
+        // Mark the selected control pressed (for SR feedback)
+        if (selected && map[selected]) map[selected].setAttribute("aria-pressed", "true");
+        // Indicate dark on toggle for quick SR hint
+        if (map.toggle) map.toggle.setAttribute("aria-pressed", effective === "dark" ? "true" : "false");
+      }
+
+      document.getElementById("toggle").addEventListener("click", () => {
+        window.ThemeController.toggleTheme();
+      });
+      document.getElementById("light").addEventListener("click", () => {
+        window.ThemeController.setTheme("light");
+      });
+      document.getElementById("dark").addEventListener("click", () => {
+        window.ThemeController.setTheme("dark");
+      });
+      document.getElementById("system").addEventListener("click", () => {
+        window.ThemeController.setTheme("system");
+      });
+
+      // Reflect state initially and on changes
+      (function reflect() {
+        const eff = document.documentElement.getAttribute("data-theme") || "light";
+        const stored = window.ThemeController.getTheme(); // "light" | "dark" | "system"
+        updatePressed(eff, stored);
+      })();
+      window.addEventListener("themechange", (e) => {
+        updatePressed(e.detail.resolvedTheme, e.detail.theme);
+      });
+    </script>
+  </body>
+</html>

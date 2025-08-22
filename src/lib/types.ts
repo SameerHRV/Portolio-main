@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 export interface Project {
   id: number;
   title: string;
+  type: "web" | "mobile";
   description: string;
   technologies: string[];
   imageUrl: string;

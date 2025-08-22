@@ -1,14 +1,211 @@
+/* Fonts are loaded via Google Fonts <link> in src/app/layout.tsx */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* Typography system: fonts, variables, responsive scale, accessibility */
+@layer base {
+  :root {
+    /* Fallback stacks and core variables */
+    --font-sans: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans",
+      system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --font-head: "Poppins", var(--font-sans);
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+
+    --lh-tight: 1.15;
+    --lh-snug: 1.25;
+    --lh-normal: 1.65;
+
+    --track-tight: -0.015em;
+    --track-normal: 0;
+    --track-wide: 0.06em;
+
+    /* Derive typography colors from existing theme tokens for consistency */
+    --fg: hsl(var(--foreground));
+    --muted: hsl(var(--muted-foreground));
+    --bg: hsl(var(--background));
+    --bg-elev: color-mix(in hsl, hsl(var(--foreground)) 6%, hsl(var(--background)) 94%);
+    --accent: hsl(var(--primary));
+  }
+
+  /* Respect dark theme via data-theme attribute */
+  [data-theme="dark"] {
+    --fg: hsl(var(--foreground));
+    --muted: hsl(var(--muted-foreground));
+    --bg: hsl(var(--background));
+    --bg-elev: color-mix(in hsl, hsl(var(--foreground)) 10%, hsl(var(--background)) 90%);
+    --accent: hsl(var(--primary));
+  }
+
+  /* Base typography */
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: var(--lh-normal);
+    color: var(--fg);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  p {
+    margin: 0 0 1rem;
+  }
+  .lead {
+    font-size: 1.125rem;
+    color: var(--muted);
+  }
+  strong {
+    font-weight: 600;
+  }
+
+  /* Responsive type scale (clamp for fluid sizing) */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-head);
+    letter-spacing: var(--track-tight);
+    line-height: var(--lh-snug);
+    margin: 0 0 0.5em;
+  }
+  h1 {
+    font-weight: 700;
+    font-size: clamp(2rem, 1.2rem + 2.5vw, 3.25rem);
+  }
+  h2 {
+    font-weight: 600;
+    font-size: clamp(1.5rem, 1.05rem + 1.5vw, 2.25rem);
+  }
+  h3 {
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.5rem);
+  }
+  body,
+  .prose {
+    font-size: clamp(1rem, 0.97rem + 0.2vw, 1.0625rem);
+  }
+  .small {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  /* Links */
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 2px;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+
+  /* Code and tech badges */
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+    font-feature-settings: "calt" 1, "liga" 1, "zero" 1;
+    font-variant-ligatures: contextual common-ligatures;
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
+  code {
+    font-weight: 400;
+    font-size: 0.9375rem;
+    background: var(--bg-elev);
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.35rem;
+  }
+  /* Emphasis for commands / key tokens */
+  code strong,
+  code .emph,
+  kbd.strong,
+  .code-strong {
+    font-weight: 500;
+  }
+  pre {
+    font-size: 0.95rem;
+    background: var(--bg-elev);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    overflow: auto;
+  }
+  .badge {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    background: var(--bg-elev);
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+  /* Section usage examples */
+  .section-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .card-title {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+  .card-desc {
+    color: var(--muted);
+  }
+  .stat {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Buttons / CTAs */
+@layer components {
+  .btn {
+    font-family: var(--font-head);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-wide);
+    line-height: 1.1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:focus-visible,
+  .btn-outline:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+}
+/* Accessibility:
+   - Maintain WCAG AA contrast; accent derives from theme tokens (dark/light).
+   - Uppercase CTAs keep letter-spacing ≥0.06em for readability.
+   Performance:
+   - Only Inter(400/500/600), Poppins(500/600/700), JetBrains Mono(400/500) are loaded via &display=swap with preconnect.
+   - Avoids loading Roboto; present only as a system fallback if available. */
 
 @layer base {
   :root {
@@ -45,9 +242,10 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    color-scheme: light;
   }
 
-  .dark {
+  [data-theme="dark"] {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -80,6 +278,44 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    /* No-JS fallback: if no data-theme is present, respect OS preference */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        color-scheme: dark;
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 217.2 91.2% 59.8%;
+        --primary-foreground: 222.2 84% 4.9%;
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 224.3 76.3% 48%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+        --sidebar-background: 240 5.9% 10%;
+        --sidebar-foreground: 240 4.8% 95.9%;
+        --sidebar-primary: 224.3 76.3% 48%;
+        --sidebar-primary-foreground: 0 0% 100%;
+        --sidebar-accent: 240 3.7% 15.9%;
+        --sidebar-accent-foreground: 240 4.8% 95.9%;
+        --sidebar-border: 240 3.7% 15.9%;
+        --sidebar-ring: 217.2 91.2% 59.8%;
+      }
+    }
   }
 }
 
@@ -94,8 +330,17 @@ body {
   section {
     @apply w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-8;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+  h1,
+  h2 {
+    @apply font-headline font-semibold;
+  }
+  h3,
+  h4 {
+    @apply font-accent font-semibold;
+  }
+  h5,
+  h6 {
+    @apply font-body font-semibold;
   }
 }
 
@@ -103,37 +348,70 @@ body {
   .gradient-text {
     @apply bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent;
   }
-  
+
   .gradient-bg {
     @apply bg-gradient-to-br from-primary/10 via-purple-600/10 to-pink-600/10;
   }
-  
+
   .glass-effect {
     @apply bg-background/80 backdrop-blur-md border border-border/50;
   }
-  
+
+  .nav-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .nav-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.25rem; /* slight gap under text */
+    width: 100%;
+    height: 2px;
+    background-color: currentColor; /* follows text color for light/dark */
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease;
+    opacity: 0.5;
+  }
+  .nav-underline:hover::after,
+  .nav-underline:focus-visible::after,
+  .nav-underline[aria-current="page"]::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
   .card-hover {
     @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02];
   }
-  
+
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 10s ease-in-out infinite;
   }
-  
+
   .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 3s ease-in-out infinite alternate;
   }
-  
+
   .animate-slide-up {
     animation: slideUp 0.6s ease-out;
   }
-  
+
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out;
+    animation: fadeIn 1s ease-out;
+  }
+  /* Static, theme-aware aurora fallback for no-JS and reduced-motion */
+  .hero-aurora-fallback {
+    background-color: hsl(var(--background));
+    background-image: radial-gradient(120% 80% at 90% 0%, hsl(var(--primary) / 0.12) 0%, transparent 70%),
+      radial-gradient(100% 60% at 10% 20%, hsl(var(--accent) / 0.1) 0%, transparent 70%),
+      radial-gradient(120% 60% at 50% 90%, hsl(var(--chart-1) / 0.1) 0%, transparent 70%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-blend-mode: screen;
   }
 }
 
@@ -145,10 +423,22 @@ body {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Readability utilities for max line length */
+  .measure {
+    max-width: 65ch;
+  }
+  .measure-tight {
+    max-width: 60ch;
+  }
+  .measure-wide {
+    max-width: 75ch;
+  }
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -183,4 +473,109 @@ body {
   to {
     opacity: 1;
   }
+}
+
+/* CometCard theme variables and utilities */
+@layer base {
+  :root {
+    --comet-glare-rgb: 255 255 255;
+    --comet-glare-1: 0.9;
+    --comet-glare-2: 0.6;
+    --comet-glare-opacity: 0.5;
+    /* Subtle, theme-aware shadow for light mode */
+    --comet-shadow: 0 18px 40px rgba(2, 6, 23, 0.08), 0 8px 24px rgba(2, 6, 23, 0.06);
+    /* Card gradient endpoints derived from theme tokens */
+    --comet-surface-from: hsl(var(--card));
+    --comet-surface-to: hsl(var(--muted));
+  }
+
+  [data-theme="dark"] {
+    /* Keep glare white but tone it down in dark mode */
+    --comet-glare-rgb: 255 255 255;
+    --comet-glare-1: 0.55;
+    --comet-glare-2: 0.25;
+    --comet-glare-opacity: 0.25;
+    /* Stronger shadow for dark surfaces */
+    --comet-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25);
+    --comet-surface-from: hsl(var(--card));
+    --comet-surface-to: hsl(var(--muted));
+  }
+}
+
+@layer components {
+  .comet-shadow {
+    box-shadow: var(--comet-shadow);
+  }
+  .comet-surface {
+    background-image: linear-gradient(to bottom right, var(--comet-surface-from), var(--comet-surface-to));
+  }
+}
+
+/* Locomotive Scroll progressive enhancement styles */
+html.has-scroll-smooth body {
+  overflow: hidden; /* prevent double scrollbars when smooth is active */
+}
+.scroll-root {
+  min-height: 100%;
+}
+html.has-scroll-smooth .scroll-root {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Reveal helpers (works with Locomotive data-scroll-class="is-inview" and IO fallback)
+   Safety: keep content readable by default even if scroll events fail to fire. */
+html.has-locomotive [data-scroll].reveal-up {
+  opacity: 1; /* visible by default to avoid unreadable content */
+  transform: translate3d(0, 12px, 0); /* subtle lift until in view */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.is-inview.reveal-up {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Reduced motion: disable animations/transitions and reveal immediately */
+@media (prefers-reduced-motion: reduce) {
+  html *,
+  html *::before,
+  html *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Skip link (visible when focused) */
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  left: 8px;
+  top: -40px;
+  padding: 8px 12px;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Utility to hint compositor usage for parallax elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Disable native smooth scrolling when Locomotive is active to avoid double-smoothing */
+html.has-locomotive body {
+  scroll-behavior: auto;
 }
