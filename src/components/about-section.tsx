@@ -6,7 +6,10 @@ import Link from "next/link";
 import { about, skills } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+<<<<<<< HEAD
 import { SuggestionDialog } from "./suggestion-dialog";
+=======
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
 import { User, Code, Award, Heart, Rocket, Smartphone, Server, Palette } from "lucide-react";
 
 export function AboutSection() {
@@ -85,9 +88,12 @@ export function AboutSection() {
                     <Link href="#contact">Contact Me</Link>
                   </Button>
                 </div>
+<<<<<<< HEAD
                 <div className="pt-2">
                   <SuggestionDialog originalText={bio} suggestionType="about" onSuggestionSelect={setBio} />
                 </div>
+=======
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
               </CardContent>
             </Card>
 
@@ -176,11 +182,19 @@ export function AboutSection() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
+<<<<<<< HEAD
                     <div className="text-3xl font-headline font-bold gradient-text mb-2">5+</div>
                     <div className="text-muted-foreground">Years Experience</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-headline font-bold gradient-text mb-2">50+</div>
+=======
+                    <div className="text-3xl font-headline font-bold gradient-text mb-2">1+</div>
+                    <div className="text-muted-foreground">Years Experience</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-headline font-bold gradient-text mb-2">10+</div>
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
                     <div className="text-muted-foreground">Projects Completed</div>
                   </div>
                   <div className="text-center">

@@ -72,6 +72,7 @@ export function ContactSection() {
     {
       icon: Mail,
       title: "Email",
+<<<<<<< HEAD
       value: "hello@example.com",
       href: "mailto:hello@example.com",
     },
@@ -85,6 +86,15 @@ export function ContactSection() {
       icon: MapPin,
       title: "Location",
       value: "San Francisco, CA",
+=======
+      value: "sameerhrv.work@gmail.com",
+      href: "mailto:sameerhrv.work@gmail.com",
+    },
+    {
+      icon: MapPin,
+      title: "Address",
+      value: "Belagavi Karnataka, India",
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
       href: "#",
     },
   ];

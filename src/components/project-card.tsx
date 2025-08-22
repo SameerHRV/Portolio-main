@@ -8,7 +8,10 @@ import { ExternalLink, Eye, Github, Globe } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+<<<<<<< HEAD
 import { SuggestionDialog } from "./suggestion-dialog";
+=======
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
 
 interface ProjectCardProps {
   project: Project;
@@ -69,10 +72,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <p className="flex-1 text-muted-foreground text-sm leading-relaxed mb-4">{description}</p>
+<<<<<<< HEAD
 
         <div className="mb-4">
           <SuggestionDialog originalText={description} suggestionType="project" onSuggestionSelect={setDescription} />
         </div>
+=======
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
       </CardContent>
 
       <CardFooter className="flex justify-between p-6 pt-0">

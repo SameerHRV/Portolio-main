@@ -43,7 +43,11 @@ export const projects: Project[] = [
 export const about = {
   name: "Sameer Harapnahalli",
   role: "Full-Stack Web & React Native Developer",
+<<<<<<< HEAD
   bio: "I'm a full-stack web and React Native developer who builds polished user interfaces and reliable, scalable backends. I care deeply about clean architecture, performance, and design details that delight users and impress clients. I enjoy turning ideas into high-quality web and mobile products.",
+=======
+  bio: "Hi my name is Sameer and I'm a full-stack web and React Native developer who builds polished user interfaces and reliable, scalable backends. I care deeply about clean architecture, performance, and design details that delight users and impress clients. I enjoy turning ideas into high-quality web and mobile products.",
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
 };
 
 export const skills: Skill[] = [

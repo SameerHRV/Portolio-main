@@ -116,9 +116,14 @@ export function Footer() {
           <div>
             <h3 className="font-headline text-lg font-semibold mb-6 text-foreground">Get In Touch</h3>
             <div className="space-y-3 text-muted-foreground">
+<<<<<<< HEAD
               <p>hello@example.com</p>
               <p>+1 (555) 123-4567</p>
               <p>San Francisco, CA</p>
+=======
+              <p>sameerhrv.work@gmail.com</p>
+              <p>Belagavi Karnataka, India</p>
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
             </div>
           </div>
         </div>
@@ -129,7 +134,11 @@ export function Footer() {
             &copy; {year} Devfolio. Made with <Heart className="inline h-4 w-4 text-red-500" /> by passionate
             developers.
           </p>
+<<<<<<< HEAD
           <Button
+=======
+          {/* <Button
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
             onClick={scrollToTop}
             variant="ghost"
             size="icon"
@@ -137,7 +146,11 @@ export function Footer() {
             aria-label="Scroll to top"
           >
             <ArrowUp className="h-5 w-5" />
+<<<<<<< HEAD
           </Button>
+=======
+          </Button> */}
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
         </div>
       </div>
     </footer>

@@ -53,7 +53,11 @@ export function ThemeToggle({ className }: { className?: string }) {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
+<<<<<<< HEAD
       <DropdownMenuContent align="end" className="min-w-[10rem]">
+=======
+      {/* <DropdownMenuContent align="end" className="min-w-[10rem]">
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
         <DropdownMenuRadioGroup
           value={theme ?? "system"}
           onValueChange={(v) => setTheme(v as "light" | "dark" | "system")}
@@ -68,7 +72,11 @@ export function ThemeToggle({ className }: { className?: string }) {
             <Laptop className="mr-2 h-4 w-4" /> System
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
+<<<<<<< HEAD
       </DropdownMenuContent>
+=======
+      </DropdownMenuContent> */}
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
     </DropdownMenu>
   );
 }

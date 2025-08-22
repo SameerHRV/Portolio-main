@@ -262,6 +262,7 @@ export function ScrollProvider({
       setIsSmooth(false);
       setupIntersectionFallback(root);
       updateHtmlFlags(false);
+<<<<<<< HEAD
       // Deep link on load with native
       if (window.location.hash) {
         const el = document.querySelector(window.location.hash);
@@ -270,6 +271,35 @@ export function ScrollProvider({
           requestAnimationFrame(() => {
             nativeScrollTo(el, { behavior: "smooth", offset: defaultOffset, focus: nativeFocusIntoView });
           });
+=======
+      // Deep link on load with native (respect deep links only on fresh navigation, not reload)
+      {
+        const navEntry = performance.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming | undefined;
+        const navType = (navEntry && navEntry.type) || (performance as any)?.navigation?.type;
+        const isReload = navType === "reload" || navType === 1;
+
+        if (window.location.hash) {
+          if (isReload) {
+            // Clear hash on reload so the page opens on hero/top
+            history.replaceState(null, "", window.location.pathname + window.location.search);
+            const hero = document.querySelector("#hero");
+            requestAnimationFrame(() => {
+              if (hero) {
+                nativeScrollTo(hero, { behavior: "auto", offset: defaultOffset, focus: nativeFocusIntoView });
+              } else {
+                window.scrollTo({ top: 0, behavior: "auto" });
+              }
+            });
+          } else {
+            const el = document.querySelector(window.location.hash);
+            if (el) {
+              // Delay to ensure layout ready
+              requestAnimationFrame(() => {
+                nativeScrollTo(el, { behavior: "smooth", offset: defaultOffset, focus: nativeFocusIntoView });
+              });
+            }
+          }
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
         }
       }
       return;
@@ -327,18 +357,52 @@ export function ScrollProvider({
         setupResizeUpdate(loco, update);
         // Reveal fallback not required when locomotive is active (it handles data-scroll-class)
 
+<<<<<<< HEAD
         // Initial deep link handling without jump
         const onLoadHash = () => {
           if (window.location.hash) {
             const el = document.querySelector(window.location.hash);
             if (el) {
+=======
+        // Initial deep link handling without jump (respect deep links only on fresh navigation, not reload)
+        const onLoadHash = () => {
+          const navEntry = performance.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming | undefined;
+          const navType = (navEntry && navEntry.type) || (performance as any)?.navigation?.type;
+          const isReload = navType === "reload" || navType === 1;
+
+          if (window.location.hash) {
+            if (isReload) {
+              // Clear hash on reload so the page opens on hero/top
+              history.replaceState(null, "", window.location.pathname + window.location.search);
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
               // Ensure loco computed sizes
               setTimeout(() => {
                 try {
                   loco.update();
                 } catch {}
+<<<<<<< HEAD
                 scrollTo(el, { duration: 0, disableLerp: true });
               }, 0);
+=======
+                const hero = document.querySelector("#hero");
+                if (hero) {
+                  scrollTo(hero, { duration: 0, disableLerp: true });
+                } else {
+                  scrollTo(0, { duration: 0, disableLerp: true });
+                }
+              }, 0);
+            } else {
+              const el = document.querySelector(window.location.hash);
+              if (el) {
+                // Ensure loco computed sizes
+                setTimeout(() => {
+                  try {
+                    loco.update();
+                  } catch {}
+                  scrollTo(el, { duration: 0, disableLerp: true });
+                }, 0);
+              }
+>>>>>>> 68172dbf422b618229d59080a147e31c37c80ced
             }
           }
         };
